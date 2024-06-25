@@ -7,9 +7,9 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/../../../../../../flutter/packages/flutter_tools/gradle" name="gradle">
+              <build path="$USER_HOME$/Downloads/flutter/packages/flutter_tools/gradle" name="gradle">
                 <projects>
-                  <project path="$PROJECT_DIR$/../../../../../../flutter/packages/flutter_tools/gradle" />
+                  <project path="$USER_HOME$/Downloads/flutter/packages/flutter_tools/gradle" />
                 </projects>
               </build>
             </builds>
@@ -19,10 +19,20 @@
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_native_splash-2.3.13/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-2.32.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_in_app_messaging-0.7.5+7/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging-14.9.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications-17.1.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_secure_storage-5.1.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-12.0.7/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/rive_common-0.4.9/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.3/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.3/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/../../../../../../flutter/packages/flutter_tools/gradle" />
+            <option value="$USER_HOME$/Downloads/flutter/packages/flutter_tools/gradle" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
