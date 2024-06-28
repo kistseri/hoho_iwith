@@ -13,6 +13,6 @@ Future<void> loadButtonCheckedInfo() async {
   final switchButtonController = Get.put(SwitchButtonController());
 
   for (int i = 0; i < switchButtonController.buttonCheckedList.length; i++) {
-    switchButtonController.buttonCheckedList[i] = prefs.getBool('buttonChecked$i') ?? false; 
+    switchButtonController.buttonCheckedList[i] = prefs.getBool('buttonChecked$i') ?? true; 
   }
 }

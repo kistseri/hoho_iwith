@@ -36,7 +36,7 @@ class _HanReportState extends State<HanReport> {
     
     return Obx(() => Container(
       color: themeController.isLightTheme.value 
-        ? const Color(0xfffaeef4) 
+        ? Color(int.parse(reportWeeklyDataController.sWeeklyDataList[0].color, radix: 16))
         : DarkColors.basic,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

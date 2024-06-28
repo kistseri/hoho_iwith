@@ -99,7 +99,7 @@ Widget bookButton() {
     imagePath:  homeMenuList[3][1],
     onTap: () async {
       await getIsReportClassExist(currentYear, currentMonth);
-      if (isReportClassExistDataController.isSExist || isReportClassExistDataController.isSExist) {
+      if (isReportClassExistDataController.isSExist || isReportClassExistDataController.isIExist) {
         await getReportWeeklyData(currentYear, currentMonth);
         await getReportMonthlyData(currentYear, currentMonth);
       }

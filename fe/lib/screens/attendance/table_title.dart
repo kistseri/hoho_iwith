@@ -29,7 +29,7 @@ Widget tableTitle() {
         const Expanded(
           flex: (10 - columnFlex),
           child: Center(
-            child: Text("내용", style: textStyle,)
+            child: Text("출결 시간", style: textStyle,)
           ),
         ),
       ],

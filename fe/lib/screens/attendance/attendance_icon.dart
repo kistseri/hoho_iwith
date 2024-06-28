@@ -17,7 +17,7 @@ Widget attendanceStatusIcon(status) {
       color: attendanceStatusList[status]!['color'] as Color?,
     );
   } else {
-    return Container();
+    return const SizedBox(width: attendanceIconSize, height: attendanceIconSize);
   }
 }
 
@@ -30,6 +30,6 @@ Widget attendanceSubjectIcon(subject) {
       decoration: imageBoxDecoration(subjectImageList[subject].toString(), BoxFit.contain)
     );
   } else {
-    return Container();
+    return const SizedBox(width: attendanceIconSize, height: attendanceIconSize);
   }
 }
