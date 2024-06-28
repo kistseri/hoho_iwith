@@ -38,7 +38,7 @@ class _BookReportState extends State<BookReport> {
 
     return Obx(() => Container(
       color: themeController.isLightTheme.value 
-        ? const Color(0xffe7eef8) 
+        ? Color(int.parse(reportWeeklyDataController.iWeeklyDataList[0].color, radix: 16))
         : DarkColors.basic,
       child: Column(
         children: [
@@ -95,19 +95,19 @@ class _BookReportState extends State<BookReport> {
                     ? [
                       subTitleImage("book_report1.png", "수업내용", const Color(0xff34b8bc)),
                       RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:  formattedWeekNote2[1],
-                            style: TextStyle(
-                              color: themeController.isLightTheme.value ? LightColors.blue : const Color(0xffbec7ff), 
-                              fontFamily: "NotoSansKR-SemiBold")
-                          ),
-                          TextSpan(
-                            text: formattedWeekNote2[2],
-                            style: TextStyle(color: Theme.of(Get.context!).colorScheme.onSurface)
-                          ),
-                        ]),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:  formattedWeekNote2[1],
+                              style: TextStyle(
+                                color: themeController.isLightTheme.value ? LightColors.blue : const Color(0xffbec7ff), 
+                                fontFamily: "NotoSansKR-SemiBold")
+                            ),
+                            TextSpan(
+                              text: formattedWeekNote2[2],
+                              style: TextStyle(color: Theme.of(Get.context!).colorScheme.onSurface)
+                            ),
+                          ]),
                       )
                     ]
                     : [],

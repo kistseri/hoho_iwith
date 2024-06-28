@@ -15,7 +15,6 @@ class ClassInfoData {
   final String etime;         // 수업 종료 시간
   final String dateName;      // 요일
   final String startYM;       // 최초 수업 연월
-  final String lastYM;        // 가장 최근 수업 연월
   
   ClassInfoData ({
     required this.stuId,
@@ -27,7 +26,6 @@ class ClassInfoData {
     required this.etime,
     required this.dateName,
     required this.startYM,
-    required this.lastYM,
   });
 
   factory ClassInfoData.fromJson(Map<String, dynamic> json) {
@@ -41,7 +39,6 @@ class ClassInfoData {
       etime: json['etime'] ?? "",
       dateName: json['DATENAME'] ?? "",
       startYM: json['sym'] ?? "",
-      lastYM: json['lastym'] ?? "",
     );
   }
 }
@@ -98,12 +95,12 @@ class ClassInfoDataController extends GetxController {
       String subjectSTime = data.stime;
       String subjectETime = data.etime;
       String subjectDateName = data.dateName;
-      String lastYM = data.lastYM;
+      String gubunName = data.gubunName;
       
       if (!subjectMap.containsKey(studentName)) {
-        subjectMap[studentName] = [[subjectName, subjectNumber, subjectSTime, subjectETime, subjectDateName, lastYM]];
+        subjectMap[studentName] = [[subjectName, subjectNumber, subjectSTime, subjectETime, subjectDateName, gubunName]];
       } else {
-        subjectMap[studentName]!.add([subjectName, subjectNumber, subjectSTime, subjectETime, subjectDateName, lastYM]);
+        subjectMap[studentName]!.add([subjectName, subjectNumber, subjectSTime, subjectETime, subjectDateName, gubunName]);
       }
     }
     return subjectMap;

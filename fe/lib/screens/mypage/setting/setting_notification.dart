@@ -27,7 +27,7 @@ class SwitchButtonController extends GetxController {
     super.onInit();
     final isPaymentNoticeExist = isPaymentNoticeExistController.isPaymentNoticeExist.value;
     buttonNameList = isPaymentNoticeExist ? buttonNameList1 : buttonNameList2;
-    buttonCheckedList = List.filled(buttonNameList.length, false).obs;
+    buttonCheckedList = List.filled(buttonNameList.length, true).obs;
   }
 
   // 알림 정보를 기기의 로컬저장소에 저장

@@ -95,7 +95,9 @@ Widget detailTableContent(subject, status, check) {
       // 출결 상태 아이콘
       attendanceStatusIcon(status),
       // 출결 텍스트
-      Text("$status",style: const TextStyle(fontWeight: FontWeight.bold)),
+      status == ""
+      ? const Text("없음", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.transparent))
+      : Text("$status", style: const TextStyle(fontWeight: FontWeight.bold)),
     ],
   );
 }
