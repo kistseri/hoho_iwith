@@ -13,7 +13,7 @@ import 'screens/login/login_screen.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async{
-  // 앱이 초기화될 때동안 splash 이미지 표시
+  // 앱이 초기화될 때동안 splash 이미지 표시..
   preserveSplashScreen();
   // FCM 셋업
   await setupFcm();
