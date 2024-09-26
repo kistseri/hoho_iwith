@@ -17,18 +17,37 @@ import 'package:get/get.dart';
 
 // 알림 리스트
 Widget noticeListTile(index) {
-  final screenSize = MediaQuery.of(Get.context!).size;      
+  final screenSize = MediaQuery.of(Get.context!).size;
   final noticeDataController = Get.put(NoticeDataController());
   final noticeNum = noticeDataController.noticeDataList![index].noticeNum;
   final themeController = Get.put(ThemeController());
 
+  if (noticeNum == 3) {
+    final isVisible =
+        noticeDataController.noticeDataList![index].reportView == "Y";
+
+    return Visibility(
+      visible: isVisible,
+      child: buildListTile(
+          noticeDataController, noticeNum, screenSize, themeController, index),
+    );
+  } else {
+    return buildListTile(
+        noticeDataController, noticeNum, screenSize, themeController, index);
+  }
+}
+
+Widget buildListTile(NoticeDataController noticeDataController, int noticeNum,
+    Size screenSize, ThemeController themeController, int index) {
   return GestureDetector(
-    onTap: () async{                   // 알림 탭 -> 해당화면으로 이동
+    onTap: () async {
+      // 알림 탭 -> 해당화면으로 이동
       Widget page;
       switch (noticeNum) {
         case 0:
           await getOfficialNoticeData(index);
           page = NoticeDetailScreen(index: index, noticeNum: noticeNum);
+          break;
         case 1:
           await getClassNoticeData(index);
           page = NoticeDetailScreen(index: index, noticeNum: noticeNum);
@@ -46,28 +65,25 @@ Widget noticeListTile(index) {
           page = const HomeScreen();
           return;
       }
-      Get.to(
-        page, 
-        transition: transitionType, 
-        duration: transitionDuration
-      );
+      Get.to(page, transition: transitionType, duration: transitionDuration);
     },
     child: Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           // 이미지
           leading: Obx(() => Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: themeController.isLightTheme.value 
-                ? lightNoticeColorList[noticeNum]
-                : darkNoticeColorList[noticeNum], 
-              borderRadius: BorderRadius.circular(10)),
-            padding: const EdgeInsets.all(5),
-            child: Image.asset(noticeImageList[noticeNum]),
-          )),
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: themeController.isLightTheme.value
+                        ? lightNoticeColorList[noticeNum]
+                        : darkNoticeColorList[noticeNum],
+                    borderRadius: BorderRadius.circular(10)),
+                padding: const EdgeInsets.all(5),
+                child: Image.asset(noticeImageList[noticeNum]),
+              )),
           // 텍스트
           title: Text(
             noticeDataController.noticeDataList![index].title,
@@ -78,18 +94,19 @@ Widget noticeListTile(index) {
         ),
         // 알림 시간
         Container(
-          margin: EdgeInsets.only(left: screenSize.width * 0.7, bottom: 10),
-          height: 25,
-          width: screenSize.width * 0.25,
-          decoration: BoxDecoration(
-            color: Theme.of(Get.context!).colorScheme.onSecondary,
-            borderRadius: BorderRadius.circular(20)),
-          child: Center(
-            child: Text(
-              noticeDataController.noticeDataList![index].ymdTime.split(" ")[0],
-              style: const TextStyle(fontSize: 12,))
-          )
-        ),
+            margin: EdgeInsets.only(left: screenSize.width * 0.7, bottom: 10),
+            height: 25,
+            width: screenSize.width * 0.25,
+            decoration: BoxDecoration(
+                color: Theme.of(Get.context!).colorScheme.onSecondary,
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+                    noticeDataController.noticeDataList![index].ymdTime
+                        .split(" ")[0],
+                    style: const TextStyle(
+                      fontSize: 12,
+                    )))),
         // 구분선
         const Divider(height: 1),
       ],

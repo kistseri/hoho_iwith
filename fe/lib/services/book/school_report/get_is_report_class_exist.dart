@@ -1,25 +1,26 @@
 import 'dart:convert';
+
 import 'package:flutter_application/models/book_data/is_report_class_exist_data.dart';
+import 'package:flutter_application/utils/get_dropdown_stuId.dart';
 import 'package:flutter_application/utils/network_check.dart';
 import 'package:flutter_application/widgets/date_format.dart';
-import 'package:flutter_application/utils/get_dropdown_stuId.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_application/widgets/dialog.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 /////////////////////////////////
 // 한스쿨 북스쿨 수업 유무 체크 //
 /////////////////////////////////
 
 Future<void> getIsReportClassExist(year, month) async {
-
   // 컨트롤러
-  final ConnectivityController connectivityController = Get.put(ConnectivityController());
-  final StudentIdController studentIdController = Get.put(StudentIdController()); 
+  final ConnectivityController connectivityController =
+      Get.put(ConnectivityController());
+  final StudentIdController studentIdController =
+      Get.put(StudentIdController());
 
   if (connectivityController.isConnected.value) {
-
     String url = dotenv.get('REPORT_CLASS_YN_URL');
 
     // 학생 아이디
@@ -31,16 +32,14 @@ Future<void> getIsReportClassExist(year, month) async {
     String ym = formatYM(currrentPageYear, currentPageMonth);
 
     // HTTP POST 요청
-    var response = await http.post(
-      Uri.parse(url), 
-      body: {
-        'stuid': stuId, 
-        'ym': ym
-      }
-    );
+    var response =
+        await http.post(Uri.parse(url), body: {'stuid': stuId, 'ym': ym});
 
     // 응답의 content-type utf-8로 인코딩으로 설정
-    if (response.headers['content-type']?.toLowerCase().contains('charset=utf-8') != true) {
+    if (response.headers['content-type']
+            ?.toLowerCase()
+            .contains('charset=utf-8') !=
+        true) {
       response.headers['content-type'] = 'application/json; charset=utf-8';
     }
     try {
@@ -51,9 +50,15 @@ Future<void> getIsReportClassExist(year, month) async {
         // 응답 데이터가 성공일 때
         if (resultList[0]["result"] == null) {
           final resultList0 = resultList.cast<Map<String, dynamic>>();
-          List<IsReportClassExistData> isReportClassExistDataList = resultList0.map<IsReportClassExistData>((json) => IsReportClassExistData.fromJson(json)).toList();
-          final IsReportClassExistDataController isReportClassExistDataController = Get.put(IsReportClassExistDataController());     
-          isReportClassExistDataController.setIsReportClassExistDataList(isReportClassExistDataList);
+          List<IsReportClassExistData> isReportClassExistDataList = resultList0
+              .map<IsReportClassExistData>(
+                  (json) => IsReportClassExistData.fromJson(json))
+              .toList();
+          final IsReportClassExistDataController
+              isReportClassExistDataController =
+              Get.put(IsReportClassExistDataController());
+          isReportClassExistDataController
+              .setIsReportClassExistDataList(isReportClassExistDataList);
         }
         // 응답 데이터가 오류일 때("9999": 오류)
         else {

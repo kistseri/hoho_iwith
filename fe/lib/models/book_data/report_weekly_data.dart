@@ -1,4 +1,4 @@
-import 'package:get/get.dart';  
+import 'package:get/get.dart';
 
 /////////////////////////////////////////
 // 한스쿨, 북스쿨 주차별 수업내용 데이터 //
@@ -6,15 +6,15 @@ import 'package:get/get.dart';
 
 // 데이터 클래스
 class ReportWeeklyData {
-  final String bookGubun;     // 한스쿨 북스쿨 구분
-  final String bookName;      // 교재 이름
-  final String bookNumber;    // 교재 호수
-  final String week;          // 주차
-  final String weekNote1;     // 설명 1 
-  final String weekNote2;     // 설명 2
-  final int score;            // 점수
+  final String bookGubun; // 한스쿨 북스쿨 구분
+  final String bookName; // 교재 이름
+  final String bookNumber; // 교재 호수
+  final String week; // 주차
+  final String weekNote1; // 설명 1
+  final String weekNote2; // 설명 2
+  final int score; // 점수
   final String color;
-  
+
   ReportWeeklyData({
     required this.bookGubun,
     required this.bookName,
@@ -32,8 +32,12 @@ class ReportWeeklyData {
       bookName: json['note'] ?? "",
       bookNumber: json['mgubun_str'] ?? "",
       week: json['ju'] ?? "",
-      weekNote1: json['ju_note1'] ?? "",
-      weekNote2: json.containsKey('ju_note2') ? (json['ju_note2'] as String).replaceAll('<br>', '\n') : "",
+      weekNote1: json.containsKey('ju_note1')
+          ? (json['ju_note1'] as String).replaceAll('<br>', '\n')
+          : "",
+      weekNote2: json.containsKey('ju_note2')
+          ? (json['ju_note2'] as String).replaceAll('<br>', '\n')
+          : "",
       score: json['jumsu'] ?? 0,
       color: json['color'] ?? "ffe7eef8",
     );
@@ -42,9 +46,8 @@ class ReportWeeklyData {
 
 // 데이터 컨트롤러
 class ReportWeeklyDataController extends GetxController {
-
   List<ReportWeeklyData>? _reportWeeklyDataList;
-  
+
   void setReportWeeklyDataList(List<ReportWeeklyData> reportWeeklyDataList) {
     _reportWeeklyDataList = reportWeeklyDataList;
     update();
@@ -79,6 +82,10 @@ class ReportWeeklyDataController extends GetxController {
   get iWeeklyDataList => seperatedData["I"];
 
   // 수업별 책 이름
-  get sBookName => sWeeklyDataList.length > 0 ? (seperatedData["S"]![0].bookName + seperatedData["S"]![0].bookNumber) : "";
-  get iBookName => iWeeklyDataList.length > 0 ? (seperatedData["I"]![0].bookName + seperatedData["I"]![0].bookNumber) : "";
+  get sBookName => sWeeklyDataList.length > 0
+      ? (seperatedData["S"]![0].bookName + seperatedData["S"]![0].bookNumber)
+      : "";
+  get iBookName => iWeeklyDataList.length > 0
+      ? (seperatedData["I"]![0].bookName + seperatedData["I"]![0].bookNumber)
+      : "";
 }

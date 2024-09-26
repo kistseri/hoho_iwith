@@ -1,3 +1,4 @@
+import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/class_info_data.dart';
 import 'package:flutter_application/screens/home/home_menu_box.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_application/widgets/app_bar.dart';
 import 'package:flutter_application/widgets/imagebox_decoration.dart';
 import 'package:flutter_application/widgets/theme_controller.dart';
 import 'package:get/get.dart';
-import 'package:banner_carousel/banner_carousel.dart';
 
 ///////////////////
 //    홈 화면    //
@@ -22,19 +22,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // 컨트롤러
-  final classInfoDataController = Get.put(ClassInfoDataController()); 
+  final classInfoDataController = Get.put(ClassInfoDataController());
   final themeController = Get.put(ThemeController());
 
   // 수업정보 박스
   List<Widget> _buildBanners(BuildContext context, List<String> snamesList) {
     return snamesList.map((name) => studentInfoBox(name)).toList();
   }
+
   Widget bannerCarousel(BuildContext context, List<String> snamesList) {
     final banners = _buildBanners(context, snamesList);
     final Size screenSize = MediaQuery.of(context).size;
 
     return BannerCarousel(
-      customizedIndicators: const IndicatorModel.animation(width: 10, height: 5, spaceBetween: 2, widthAnimation: 30),
+      customizedIndicators: const IndicatorModel.animation(
+          width: 10, height: 5, spaceBetween: 2, widthAnimation: 30),
       activeColor: Colors.white70,
       disableColor: Colors.white38,
       animation: true,
@@ -60,11 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Obx(
       () => Container(
         // 홈 배경화면
-        decoration: 
-          // 라이트/다크 모드 배경이미지
-          themeController.isLightTheme.value
-          ? imageBoxDecoration('assets/images/background.jpg', BoxFit.cover)
-          : imageBoxDecoration('assets/images/dark_background.jpg', BoxFit.cover),
+        decoration:
+            // 라이트/다크 모드 배경이미지
+            themeController.isLightTheme.value
+                ? imageBoxDecoration(
+                    'assets/images/background.jpg', BoxFit.cover)
+                : imageBoxDecoration(
+                    'assets/images/dark_background.jpg', BoxFit.cover),
         // 홈 Content
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -77,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // 학생 정보 박스(이름, 센터, 수강정보)
                 bannerCarousel(context, snamesList),
                 const SizedBox(height: 30),
-                // 메뉴 박스(출석체크, 학원비 내역, 알림장, 독클결과)
+                // 메뉴 박스(출석체크, 교육비 내역, 알림장, 독클결과)
                 menuBox(screenSize),
               ],
             ),

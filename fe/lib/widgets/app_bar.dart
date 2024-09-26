@@ -39,19 +39,23 @@ PreferredSizeWidget customAppBar(title) {
 PreferredSizeWidget homeAppBar(screenSize) {
   return AppBar(
     title: SizedBox(
-      width: screenSize.width * 0.3, 
-      height: screenSize.height * 0.1, 
-      child: Image.asset('assets/images/appbar/appbar_logo.png'),
+      width: screenSize.width * 0.3,
+      height: screenSize.height * 0.1,
+      child: Image.asset('assets/images/appbar/logo.png'),
     ),
     iconTheme: const IconThemeData(color: CommonColors.grey4),
     actions: [
       IconButton(
-        onPressed: () async{
-          await getCenterInfoData();
-          Get.to(const MyPageScreen());
-        }, 
-        icon: const Icon(Icons.account_circle, size: 30, color: CommonColors.grey4,)
-      )],
+          onPressed: () async {
+            await getCenterInfoData();
+            Get.to(const MyPageScreen());
+          },
+          icon: const Icon(
+            Icons.account_circle,
+            size: 30,
+            color: CommonColors.grey4,
+          ))
+    ],
     backgroundColor: CommonColors.backgroundYellow,
     elevation: 0,
     centerTitle: false,

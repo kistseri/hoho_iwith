@@ -1,4 +1,12 @@
 flutter_native_splash:
+  image: "assets/images/launcher/splash.png"
   background_image: "assets/images/launcher/splash.png"
   fullscreen: true
-  background_image_dark: "assets/images/launcher/dark_splash.png"
+  image_dark: "assets/images/launcher/splash.png"
+  background_image_dark: "assets/images/launcher/splash.png"
+  android_12:
+    image: "assets/images/launcher/splash.png"
+    image_dark: "assets/images/launcher/splash.png"
+    color: "#FFFFFF"
+    color_dark: "#000000"
+

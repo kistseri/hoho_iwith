@@ -1,5 +1,5 @@
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 ////////////////////////
 // 스플래시 화면 세팅 //
@@ -12,7 +12,8 @@ void preserveSplashScreen() {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 }
 
-void removeSplashScreen() {
+void removeSplashScreen() async {
+  await Future.delayed(const Duration(seconds: 2));
   // 앱이 초기화되면 splash 이미지 제거
   FlutterNativeSplash.remove();
 }
