@@ -128,13 +128,15 @@ class _BookReportState extends State<BookReport> {
                                                     ? LightColors.blue
                                                     : const Color(0xffbec7ff),
                                                 fontFamily:
-                                                    "NotoSansKR-SemiBold")),
+                                                    "NotoSansKR-SemiBold",
+                                                fontSize: 18)),
                                         TextSpan(
                                             text: formattedWeekNote2[2],
                                             style: TextStyle(
                                                 color: Theme.of(Get.context!)
                                                     .colorScheme
-                                                    .onSurface)),
+                                                    .onSurface,
+                                                fontSize: 18)),
                                       ]),
                                     )
                                   ]

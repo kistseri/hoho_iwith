@@ -56,9 +56,13 @@ class _PaymentScreenState extends State<PaymentScreen>
                       paymentDataController.paymentDataList![index].subjectName;
                   final paymentDate = paymentFormatYMD(paymentDataController
                       .paymentDataList![index].paymentDate);
-                  final totalAmount = NumberFormat('#,###').format(
+                  final cardAmount = NumberFormat('#,###').format(
+                      paymentDataController.paymentDataList![index].cardAmount);
+                  final transferAmount = NumberFormat('#,###').format(
                       paymentDataController
-                          .paymentDataList![index].totalAmount);
+                          .paymentDataList![index].transferAmount);
+                  final cashAmount = NumberFormat('#,###').format(
+                      paymentDataController.paymentDataList![index].cashAmount);
                   final paymentName =
                       paymentDataController.paymentDataList![index].paymentName;
                   final paymentMethod = paymentDataController
@@ -84,6 +88,17 @@ class _PaymentScreenState extends State<PaymentScreen>
                           .paymentDataList![index].cashReceiptsDate);
 
                   final isVisibleMethod = paymentMethod == "Y";
+
+                  final String totalAmount;
+                  if (cardAmount != '0') {
+                    totalAmount = cardAmount;
+                  } else if (transferAmount != '0') {
+                    totalAmount = transferAmount;
+                  } else if (cashAmount != '0') {
+                    totalAmount = cashAmount;
+                  } else {
+                    totalAmount = '0';
+                  }
 
                   // 결제 내용
                   return Container(

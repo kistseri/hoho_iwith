@@ -17,7 +17,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 앱이 초기화될 때동안 splash 이미지 표시..
   preserveSplashScreen();
-
   // FCM 셋업
   await setupFcm();
   // 화면모드 셋업

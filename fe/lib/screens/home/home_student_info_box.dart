@@ -25,6 +25,14 @@ Widget studentInfoBox(name) {
   // 현재 월
   final currentMonth = getCurrentMonth();
 
+  final monthValue = classInfoDataController
+      .getLastYMMap(classInfoDataController.classInfoDataList);
+
+  String lastMonth = monthValue[name]!.substring(4);
+  if (lastMonth.startsWith("0")) {
+    lastMonth = lastMonth.substring(1);
+  }
+
   return Container(
     padding: const EdgeInsets.only(left: 30),
     margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -63,13 +71,18 @@ Widget studentInfoBox(name) {
             ),
             // 월
             Container(
-              margin: EdgeInsets.only(right: 30),
-              padding: EdgeInsets.all(10),
+              height: 50,
+              width: 50,
+              margin: const EdgeInsets.only(right: 30),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              child: Text("$currentMonth월",
-                  style:
-                      const TextStyle(color: LightColors.blue, fontSize: 20)),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Center(
+                child: Text("$lastMonth월",
+                    style:
+                        const TextStyle(color: LightColors.blue, fontSize: 20)),
+              ),
             )
           ],
         ),

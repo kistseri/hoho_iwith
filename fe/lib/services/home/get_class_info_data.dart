@@ -28,7 +28,6 @@ Future<void> getClassInfoData() async {
 
     // 로그인 아이디
     String stuId = loginDataController.loginData!.id;
-
     // HTTP POST 요청
     var response = await http.post(Uri.parse(url), body: {
       'sibling': sibling,
@@ -41,13 +40,14 @@ Future<void> getClassInfoData() async {
         true) {
       response.headers['content-type'] = 'application/json; charset=utf-8';
     }
+
     try {
       // 응답을 성공적으로 받았을 때
       if (response.statusCode == 200) {
         final resultList = json.decode(response.body);
 
         // 응답 데이터가 성공일 때
-        if (resultList[0]["result"] == null) {
+        if (resultList[0]["result"] == "0000") {
           final resultList0 = resultList.cast<Map<String, dynamic>>();
           List<ClassInfoData> classInfoDataList = resultList0
               .map<ClassInfoData>((json) => ClassInfoData.fromJson(json))
@@ -57,6 +57,7 @@ Future<void> getClassInfoData() async {
           classInfoDataController.setClassInfoDataList(classInfoDataList);
           classInfoDataController.setSnamesList(classInfoDataList);
         }
+
         // 응답 데이터가 오류일 때("9999": 오류)
         else {
           failDialog1("응답 오류", "수업정보가 없어요");

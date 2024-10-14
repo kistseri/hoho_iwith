@@ -100,24 +100,39 @@ class _HanReportState extends State<HanReport> {
                               const SizedBox(height: 5),
                               subTitleImage("han_report2.png", "수업지도",
                                   const Color(0xff34b8bc)),
-                              Text(reportWeeklyDataController
-                                  .sWeeklyDataList[week - 1].weekNote2),
+                              RichText(
+                                text: TextSpan(
+                                  text: reportWeeklyDataController
+                                      .sWeeklyDataList[week - 1].weekNote2,
+                                  style: TextStyle(
+                                      color: Theme.of(Get.context!)
+                                          .colorScheme
+                                          .onSurface,
+                                      fontSize: 18),
+                                ),
+                              ),
                               const SizedBox(height: 5),
                               subTitleImage("han_report3.png", "TEST",
                                   const Color(0xfff1a63a)),
                               Row(
                                 children: [
                                   LinearPercentIndicator(
-                                    width: 220,
+                                    width: 200,
                                     lineHeight: 15,
                                     percent: reportWeeklyDataController
                                             .sWeeklyDataList[week - 1].score /
                                         (reportWeeklyDataController
                                                     .sWeeklyDataList[week - 1]
                                                     .bookName ==
-                                                "초등수재"
-                                            ? 8
-                                            : 6),
+                                                "한스쿨i"
+                                            ? 10
+                                            : reportWeeklyDataController
+                                                        .sWeeklyDataList[
+                                                            week - 1]
+                                                        .bookName ==
+                                                    "초등수재"
+                                                ? 8
+                                                : 6),
                                     backgroundColor: Theme.of(Get.context!)
                                         .colorScheme
                                         .onBackground,
@@ -128,7 +143,7 @@ class _HanReportState extends State<HanReport> {
                                   ),
                                   Text(
                                       '(${reportWeeklyDataController.sWeeklyDataList[week - 1].score}/'
-                                      '${reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "초등수재" ? 8 : 6})'),
+                                      '${reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "초등수재" ? 8 : reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "한스쿨i" ? 10 : 6})'),
                                 ],
                               ),
                               const SizedBox(height: 20),

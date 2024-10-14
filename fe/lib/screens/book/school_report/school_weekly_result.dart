@@ -32,7 +32,7 @@ class SchoolWeeklyResult extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color:  Theme.of(Get.context!).colorScheme.secondary,
+                    color: Theme.of(Get.context!).colorScheme.secondary,
                   ),
                 ),
               ),
@@ -56,16 +56,28 @@ class SchoolWeeklyResult extends StatelessWidget {
           left: MediaQuery.of(Get.context!).size.width / 5,
           child: const DashedVerticalDivider(),
         ),
+        if (week != 1) const DashedHorizontalDivider()
       ],
     );
   }
 }
 
-Widget titleImage(img){
+Widget titleImage(img) {
   return Container(
     height: 80,
     width: 80,
     decoration: imageBoxDecoration('assets/images/book/$img', BoxFit.contain),
+  );
+}
+
+Widget readingImage(img) {
+  return Padding(
+    padding: const EdgeInsets.all(25.0),
+    child: Container(
+      height: 30,
+      decoration:
+          imageBoxDecoration('assets/images/book/$img', BoxFit.fitHeight),
+    ),
   );
 }
 
@@ -76,7 +88,8 @@ Widget subTitleImage(img, title, color) {
         width: 20,
         height: 20,
         margin: const EdgeInsets.all(5),
-        decoration: imageBoxDecoration("assets/images/book/$img", BoxFit.contain),
+        decoration:
+            imageBoxDecoration("assets/images/book/$img", BoxFit.contain),
       ),
       Text(
         title,
