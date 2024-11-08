@@ -29,14 +29,21 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   runApp(GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialBinding: BindingsBuilder(() {
-        Get.put(DropdownButtonController());
-      }),
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      home: const MyApp()));
+    debugShowCheckedModeBanner: false,
+    initialBinding: BindingsBuilder(() {
+      Get.put(DropdownButtonController());
+    }),
+    theme: lightTheme,
+    darkTheme: darkTheme,
+    themeMode: ThemeMode.system,
+    home: const MyApp(),
+    builder: (context, child) {
+      return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: child!);
+    },
+  ));
 
   // 앱이 초기화되면 splash 이미지 제거
   removeSplashScreen();

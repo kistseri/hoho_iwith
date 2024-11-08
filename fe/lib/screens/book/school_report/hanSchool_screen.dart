@@ -88,68 +88,124 @@ class _HanReportState extends State<HanReport> {
                         ? true
                         : false;
 
-                    return SchoolWeeklyResult(
-                      week: week,
-                      isValidData: isValidData,
-                      children: isValidData
-                          ? [
-                              subTitleImage("han_report1.png", "신습한자/학습어휘",
-                                  const Color(0xff868ad6)),
-                              Text(reportWeeklyDataController
-                                  .sWeeklyDataList[week - 1].weekNote1),
-                              const SizedBox(height: 5),
-                              subTitleImage("han_report2.png", "수업지도",
-                                  const Color(0xff34b8bc)),
-                              RichText(
-                                text: TextSpan(
-                                  text: reportWeeklyDataController
-                                      .sWeeklyDataList[week - 1].weekNote2,
-                                  style: TextStyle(
-                                      color: Theme.of(Get.context!)
-                                          .colorScheme
-                                          .onSurface,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              subTitleImage("han_report3.png", "TEST",
-                                  const Color(0xfff1a63a)),
-                              Row(
-                                children: [
-                                  LinearPercentIndicator(
-                                    width: 200,
-                                    lineHeight: 15,
-                                    percent: reportWeeklyDataController
-                                            .sWeeklyDataList[week - 1].score /
-                                        (reportWeeklyDataController
-                                                    .sWeeklyDataList[week - 1]
-                                                    .bookName ==
-                                                "한스쿨i"
-                                            ? 10
-                                            : reportWeeklyDataController
-                                                        .sWeeklyDataList[
-                                                            week - 1]
-                                                        .bookName ==
-                                                    "초등수재"
-                                                ? 8
-                                                : 6),
-                                    backgroundColor: Theme.of(Get.context!)
-                                        .colorScheme
-                                        .onBackground,
-                                    progressColor: const Color(0xfff6cf35),
-                                    barRadius: const Radius.circular(10),
-                                    animation: true,
-                                    animationDuration: 1000,
-                                  ),
-                                  Text(
-                                      '(${reportWeeklyDataController.sWeeklyDataList[week - 1].score}/'
-                                      '${reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "초등수재" ? 8 : reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "한스쿨i" ? 10 : 6})'),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                            ]
-                          : [],
-                    );
+                    return reportWeeklyDataController
+                                .sWeeklyDataList[week - 1].score !=
+                            0
+                        ? SchoolWeeklyResult(
+                            week: week,
+                            isValidData: isValidData,
+                            children: isValidData
+                                ? [
+                                    subTitleImage("han_report1.png",
+                                        "신습한자/학습어휘", const Color(0xff868ad6)),
+                                    Text(reportWeeklyDataController
+                                        .sWeeklyDataList[week - 1].weekNote1),
+                                    const SizedBox(height: 5),
+                                    subTitleImage("han_report2.png", "수업지도",
+                                        const Color(0xff34b8bc)),
+                                    RichText(
+                                      text: TextSpan(
+                                        text: reportWeeklyDataController
+                                            .sWeeklyDataList[week - 1]
+                                            .weekNote2,
+                                        style: TextStyle(
+                                            color: Theme.of(Get.context!)
+                                                .colorScheme
+                                                .onSurface,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    subTitleImage("han_report3.png", "TEST",
+                                        const Color(0xfff1a63a)),
+                                    Row(
+                                      children: [
+                                        LinearPercentIndicator(
+                                          width: 200,
+                                          lineHeight: 15,
+                                          percent: reportWeeklyDataController
+                                                  .sWeeklyDataList[week - 1]
+                                                  .score /
+                                              (reportWeeklyDataController
+                                                          .sWeeklyDataList[
+                                                              week - 1]
+                                                          .bookName ==
+                                                      "한스쿨i"
+                                                  ? 10
+                                                  : reportWeeklyDataController
+                                                              .sWeeklyDataList[
+                                                                  week - 1]
+                                                              .bookName ==
+                                                          "초등수재"
+                                                      ? 8
+                                                      : 6),
+                                          backgroundColor:
+                                              Theme.of(Get.context!)
+                                                  .colorScheme
+                                                  .onBackground,
+                                          progressColor:
+                                              const Color(0xfff6cf35),
+                                          barRadius: const Radius.circular(10),
+                                          animation: true,
+                                          animationDuration: 1000,
+                                        ),
+                                        Text(
+                                            '(${reportWeeklyDataController.sWeeklyDataList[week - 1].score}/'
+                                            '${reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "초등수재" ? 8 : reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "한스쿨i" ? 10 : 6})'),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                  ]
+                                : [],
+                          )
+                        : SchoolWeeklyResult(
+                            week: week,
+                            isValidData: isValidData,
+                            children: isValidData
+                                ? [
+                                    const SizedBox(height: 5),
+                                    subTitleImage("han_report3.png", "TEST",
+                                        const Color(0xfff1a63a)),
+                                    Row(
+                                      children: [
+                                        LinearPercentIndicator(
+                                          width: 200,
+                                          lineHeight: 15,
+                                          percent: reportWeeklyDataController
+                                                  .sWeeklyDataList[week - 1]
+                                                  .score /
+                                              (reportWeeklyDataController
+                                                          .sWeeklyDataList[
+                                                              week - 1]
+                                                          .bookName ==
+                                                      "한스쿨i"
+                                                  ? 10
+                                                  : reportWeeklyDataController
+                                                              .sWeeklyDataList[
+                                                                  week - 1]
+                                                              .bookName ==
+                                                          "초등수재"
+                                                      ? 8
+                                                      : 6),
+                                          backgroundColor:
+                                              Theme.of(Get.context!)
+                                                  .colorScheme
+                                                  .onBackground,
+                                          progressColor:
+                                              const Color(0xfff6cf35),
+                                          barRadius: const Radius.circular(10),
+                                          animation: true,
+                                          animationDuration: 1000,
+                                        ),
+                                        Text(
+                                            '(${reportWeeklyDataController.sWeeklyDataList[week - 1].score}/'
+                                            '${reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "초등수재" ? 8 : reportWeeklyDataController.sWeeklyDataList[week - 1].bookName == "한스쿨i" ? 10 : 6})'),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                  ]
+                                : [],
+                          );
                   },
                 ),
               ),
