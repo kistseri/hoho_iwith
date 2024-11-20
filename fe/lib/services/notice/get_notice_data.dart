@@ -41,6 +41,7 @@ Future<void> getNoticeData(noticeNum) async {
       'stuid': id,
       'noticeNum': noticeNum0,
     });
+
     // 응답의 content-type utf-8로 인코딩으로 설정
     if (response.headers['content-type']
             ?.toLowerCase()

@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants.dart';
+import 'package:flutter_application/models/book_data/is_report_class_exist_data.dart';
 import 'package:flutter_application/models/notice_data/notice_data.dart';
 import 'package:flutter_application/screens/attendance/attendance_screen.dart';
 import 'package:flutter_application/screens/book/book_screen.dart';
 import 'package:flutter_application/screens/home/home_screen.dart';
 import 'package:flutter_application/screens/notice/notice_detail_screen.dart';
 import 'package:flutter_application/screens/payment/payment_screen.dart';
+import 'package:flutter_application/services/book/get_first_book_read_date_data.dart';
+import 'package:flutter_application/services/book/get_monthly_book_read_data.dart';
+import 'package:flutter_application/services/book/get_monthly_book_score_data.dart';
+import 'package:flutter_application/services/book/get_yearly_book_read_count_data.dart';
+import 'package:flutter_application/services/book/get_ym_book_read_count_data.dart';
+import 'package:flutter_application/services/book/school_report/get_is_report_class_exist.dart';
+import 'package:flutter_application/services/book/school_report/get_report_monthly_data.dart';
+import 'package:flutter_application/services/book/school_report/get_report_weekly_data.dart';
 import 'package:flutter_application/services/notice/get_class_notice_data.dart';
 import 'package:flutter_application/services/notice/get_official_notice_data.dart';
+import 'package:flutter_application/utils/get_current_date.dart';
 import 'package:flutter_application/widgets/theme_controller.dart';
 import 'package:get/get.dart';
 
@@ -57,6 +67,20 @@ Widget buildListTile(NoticeDataController noticeDataController, int noticeNum,
           break;
         case 3:
           page = BookScreen();
+          final isReportClassExistDataController =
+              Get.put(IsReportClassExistDataController());
+
+          await getIsReportClassExist(currentYear, currentMonth);
+          if (isReportClassExistDataController.isSExist ||
+              isReportClassExistDataController.isIExist) {
+            await getReportWeeklyData(currentYear, currentMonth);
+            await getReportMonthlyData(currentYear, currentMonth);
+          }
+          await getFirstBookReadDateData();
+          await getMonthlyBookReadData(currentYear, currentMonth);
+          await getMonthlyBookScoreData(currentYear, currentMonth);
+          await getYearlyBookReadCountData(currentYear, currentMonth - 1);
+          await getYMBookReadCountData(currentYear, currentMonth - 1);
           break;
         case 4:
           page = PaymentDropdownScreen();
@@ -65,7 +89,8 @@ Widget buildListTile(NoticeDataController noticeDataController, int noticeNum,
           page = const HomeScreen();
           return;
       }
-      Get.to(page, transition: transitionType, duration: transitionDuration);
+      Get.to(() => page,
+          transition: transitionType, duration: transitionDuration);
     },
     child: Column(
       children: [
@@ -73,17 +98,17 @@ Widget buildListTile(NoticeDataController noticeDataController, int noticeNum,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           // 이미지
-          leading: Obx(() => Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: themeController.isLightTheme.value
-                        ? lightNoticeColorList[noticeNum]
-                        : darkNoticeColorList[noticeNum],
-                    borderRadius: BorderRadius.circular(10)),
-                padding: const EdgeInsets.all(5),
-                child: Image.asset(noticeImageList[noticeNum]),
-              )),
+          leading: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+                color: themeController.isLightTheme.value
+                    ? lightNoticeColorList[noticeNum]
+                    : darkNoticeColorList[noticeNum],
+                borderRadius: BorderRadius.circular(10)),
+            padding: const EdgeInsets.all(5),
+            child: Image.asset(noticeImageList[noticeNum]),
+          ),
           // 텍스트
           title: Text(
             noticeDataController.noticeDataList![index].title,

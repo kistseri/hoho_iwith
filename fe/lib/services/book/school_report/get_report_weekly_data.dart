@@ -34,7 +34,6 @@ Future<void> getReportWeeklyData(year, month) async {
     // HTTP POST 요청
     var response =
         await http.post(Uri.parse(url), body: {'stuid': stuId, 'ym': ym});
-
     // 응답의 content-type utf-8로 인코딩으로 설정
     if (response.headers['content-type']
             ?.toLowerCase()

@@ -47,6 +47,7 @@ class _BookReportState extends State<BookReport> {
                   : null)
               : DarkColors.basic,
           child: reportWeeklyDataController.iWeeklyDataList[0].bookName != "채움"
+              // child:
               ? Column(
                   children: [
                     // 북스쿨 이미지
@@ -80,70 +81,73 @@ class _BookReportState extends State<BookReport> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: ListView.builder(
-                        itemCount: 4,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final week = index + 1;
-                          final isValidData = week <=
-                                  reportWeeklyDataController
-                                      .iWeeklyDataList.length
-                              ? true
-                              : false;
+                          itemCount: 4,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final week = index + 1;
+                            final isValidData = week <=
+                                    reportWeeklyDataController
+                                        .iWeeklyDataList.length
+                                ? true
+                                : false;
 
-                          // 수업내용 글 스타일
-                          late List<String> formattedWeekNote2;
-                          if (reportWeeklyDataController
-                                  .iWeeklyDataList.isNotEmpty &&
-                              week > 0 &&
-                              week <=
-                                  reportWeeklyDataController
-                                      .iWeeklyDataList.length) {
-                            final weekNote2 = reportWeeklyDataController
-                                .iWeeklyDataList[week - 1].weekNote2;
+                            final isVisible = reportWeeklyDataController
+                                    .reportWeeklyDataList![week - 1].visible ==
+                                "Y";
 
-                            if (weekNote2.contains('<span>') &&
-                                weekNote2.contains('</span>')) {
-                              formattedWeekNote2 =
-                                  weekNote2.split(RegExp(r'<span>|</span>'));
-                            } else {
-                              formattedWeekNote2 = ["", "", weekNote2];
+                            // 수업내용 글 스타일
+                            late List<String> formattedWeekNote2;
+                            if (reportWeeklyDataController
+                                    .iWeeklyDataList.isNotEmpty &&
+                                week > 0 &&
+                                week <=
+                                    reportWeeklyDataController
+                                        .iWeeklyDataList.length) {
+                              final weekNote2 = reportWeeklyDataController
+                                  .iWeeklyDataList[week - 1].weekNote2;
+
+                              if (weekNote2.contains('<span>') &&
+                                  weekNote2.contains('</span>')) {
+                                formattedWeekNote2 =
+                                    weekNote2.split(RegExp(r'<span>|</span>'));
+                              } else {
+                                formattedWeekNote2 = ["", "", weekNote2];
+                              }
                             }
-                          }
-
-                          return SchoolWeeklyResult(
-                            week: week,
-                            isValidData: isValidData,
-                            children: isValidData
-                                ? [
-                                    subTitleImage("book_report1.png", "수업내용",
-                                        const Color(0xff34b8bc)),
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: formattedWeekNote2[1],
-                                            style: TextStyle(
-                                                color: themeController
-                                                        .isLightTheme.value
-                                                    ? LightColors.blue
-                                                    : const Color(0xffbec7ff),
-                                                fontFamily:
-                                                    "NotoSansKR-SemiBold",
-                                                fontSize: 18)),
-                                        TextSpan(
-                                            text: formattedWeekNote2[2],
-                                            style: TextStyle(
-                                                color: Theme.of(Get.context!)
-                                                    .colorScheme
-                                                    .onSurface,
-                                                fontSize: 18)),
-                                      ]),
-                                    )
-                                  ]
-                                : [],
-                          );
-                        },
-                      ),
+                            return SchoolWeeklyResult(
+                              week: week,
+                              isValidData: isValidData,
+                              isVisible: isVisible,
+                              children: isValidData
+                                  ? [
+                                      subTitleImage("book_report1.png", "수업내용",
+                                          const Color(0xff34b8bc)),
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: formattedWeekNote2[1],
+                                              style: TextStyle(
+                                                  color: themeController
+                                                          .isLightTheme.value
+                                                      ? LightColors.blue
+                                                      : const Color(0xffbec7ff),
+                                                  fontFamily:
+                                                      "NotoSansKR-SemiBold",
+                                                  fontSize: 18)),
+                                          TextSpan(
+                                              text: formattedWeekNote2[2],
+                                              style: TextStyle(
+                                                  color: Theme.of(Get.context!)
+                                                      .colorScheme
+                                                      .onSurface,
+                                                  fontSize: 18)),
+                                        ]),
+                                      )
+                                    ]
+                                  : [],
+                            );
+                          }),
                     ),
                     // 글쓰기 이미지
                     // RichText(text: normalText("이달의 글쓰기")),

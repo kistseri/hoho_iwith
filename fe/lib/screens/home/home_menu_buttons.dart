@@ -113,7 +113,7 @@ Widget bookButton() {
         await getYearlyBookReadCountData(currentYear, currentMonth - 1);
         await getYMBookReadCountData(currentYear, currentMonth - 1);
         Get.to(
-          BookScreen(),
+          () => BookScreen(),
           transition: transitionType,
           duration: transitionDuration,
         );

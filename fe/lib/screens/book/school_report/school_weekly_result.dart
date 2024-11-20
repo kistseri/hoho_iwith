@@ -7,12 +7,14 @@ class SchoolWeeklyResult extends StatelessWidget {
   final int week;
   final bool isValidData;
   final List<Widget> children;
+  final bool isVisible;
 
   const SchoolWeeklyResult({
     super.key,
     required this.week,
     required this.isValidData,
     required this.children,
+    required this.isVisible,
   });
 
   @override
@@ -41,9 +43,17 @@ class SchoolWeeklyResult extends StatelessWidget {
               flex: 7,
               child: Container(
                 margin: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: children,
+                child: Visibility(
+                  visible: isVisible,
+                  replacement: Image.asset(
+                    'assets/images/book/book_empty.png',
+                    width: 50,
+                    height: 50,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: children,
+                  ),
                 ),
               ),
             ),

@@ -6,15 +6,18 @@ import 'package:get/get.dart';
 
 // 데이터 클래스
 class ReportViewData {
-  final String reportVisible; // 독서 권수
+  final String hVisible; // 독서 권수
+  final String iVisible;
 
   ReportViewData({
-    required this.reportVisible,
+    required this.hVisible,
+    required this.iVisible,
   });
 
   factory ReportViewData.fromJson(Map<String, dynamic> json) {
     return ReportViewData(
-      reportVisible: json['view_yn'] ?? "",
+      hVisible: json['Hview_yn'] ?? "",
+      iVisible: json['Iview_yn'] ?? "",
     );
   }
 }

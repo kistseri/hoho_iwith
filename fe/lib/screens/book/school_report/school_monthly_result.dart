@@ -8,7 +8,6 @@ import 'package:logger/logger.dart';
 
 Widget schoolMonthlyResult(String title) {
   final reportMonthlyDataController = Get.put(ReportMonthlyDataController());
-
   // 점수
   final hanScore = reportMonthlyDataController.sScore;
   final bookScore = reportMonthlyDataController.iScore;
@@ -27,7 +26,6 @@ Widget schoolMonthlyResult(String title) {
   final resultTitle = title == "han" ? hanResultTitle : bookResultTitle;
   final score = title == "han" ? hanScore : bookScore;
   final best = title == "han" ? hanBest : bookBest;
-  Logger().d('best = $best');
 
   late bool isValidData;
   if (title == "han") {

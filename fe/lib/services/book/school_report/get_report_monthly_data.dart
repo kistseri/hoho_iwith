@@ -30,7 +30,6 @@ Future<void> getReportMonthlyData(year, month) async {
     final currrentPageYear = year;
     final currentPageMonth = month;
     String ym = formatYM(currrentPageYear, currentPageMonth);
-
     // HTTP POST 요청
     var response =
         await http.post(Uri.parse(url), body: {'stuid': stuId, 'ym': ym});
@@ -55,7 +54,7 @@ Future<void> getReportMonthlyData(year, month) async {
                   (json) => ReportMonthlyData.fromJson(json))
               .toList();
           final ReportMonthlyDataController reportMonthlyDataController =
-              Get.put(ReportMonthlyDataController());
+              Get.put(ReportMonthlyDataController(), permanent: true);
           reportMonthlyDataController
               .setReportMonthlyDataList(reportMonthlyDataList);
           reportMonthlyDataController.setSeperateData(reportMonthlyDataList);

@@ -114,8 +114,13 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isVisible =
-        reportViewDataController.reportViewData!.reportVisible == "Y";
+    final bool isVisibleAll =
+        reportViewDataController.reportViewData!.hVisible == "N" &&
+            reportViewDataController.reportViewData!.iVisible == "N";
+    final bool isVisibleH =
+        reportViewDataController.reportViewData!.hVisible == "Y";
+    final bool isVisibleI =
+        reportViewDataController.reportViewData!.iVisible == "Y";
 
     return Scaffold(
       body: Column(
@@ -123,7 +128,7 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
           // 이전-현재 날짜-다음
           calendarTab(),
           // 페이지 뷰
-          isVisible
+          !isVisibleAll
               ? Expanded(
                   child: PageView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -146,16 +151,22 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
                                 child: Column(
                                   children: [
                                     // 한스쿨 리포트(과목 수강중인 경우만)
-                                    isReportClassExistDataController.isSExist
-                                        ? HanReport(
-                                            year: currentPage.year,
-                                            month: currentPage.month)
+                                    isVisibleH
+                                        ? isReportClassExistDataController
+                                                .isSExist
+                                            ? HanReport(
+                                                year: currentPage.year,
+                                                month: currentPage.month)
+                                            : const SizedBox()
                                         : const SizedBox(),
                                     // 북스쿨 리포트(과목 수강중인 경우만)
-                                    isReportClassExistDataController.isIExist
-                                        ? BookReport(
-                                            year: currentPage.year,
-                                            month: currentPage.month)
+                                    isVisibleI
+                                        ? isReportClassExistDataController
+                                                .isIExist
+                                            ? BookReport(
+                                                year: currentPage.year,
+                                                month: currentPage.month)
+                                            : const SizedBox()
                                         : const SizedBox(),
                                     // 독서클리닉 결과 1
                                     BookResult1(

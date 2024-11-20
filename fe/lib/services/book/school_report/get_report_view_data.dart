@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_application/models/book_data/report_view_data.dart';
+import 'package:flutter_application/utils/get_dropdown_stuId.dart';
 import 'package:flutter_application/utils/network_check.dart';
 import 'package:flutter_application/widgets/date_format.dart';
 import 'package:flutter_application/widgets/dialog.dart';
@@ -16,22 +17,22 @@ Future<void> getReportViewData(year, month) async {
   // 컨트롤러
   final ConnectivityController connectivityController =
       Get.put(ConnectivityController());
-  // final StudentIdController studentIdController =
-  //     Get.put(StudentIdController());
+  final StudentIdController studentIdController =
+      Get.put(StudentIdController());
 
   if (connectivityController.isConnected.value) {
     String url = dotenv.get('REPORT_VIEW_YN_URL');
 
     // // 학생 아이디
-    // final stuId = studentIdController.getStuId();
+    final stuId = studentIdController.getStuId();
 
     // 해당 페이지 연월
     final currrentPageYear = year;
     final currentPageMonth = month;
     String ym = formatYM(currrentPageYear, currentPageMonth);
-
     // HTTP POST 요청
-    var response = await http.post(Uri.parse(url), body: {'ym': ym});
+    var response =
+        await http.post(Uri.parse(url), body: {'ym': ym, 'stuid': stuId});
     // 응답의 content-type utf-8로 인코딩으로 설정
     if (response.headers['content-type']
             ?.toLowerCase()

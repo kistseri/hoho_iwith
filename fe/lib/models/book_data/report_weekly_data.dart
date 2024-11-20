@@ -13,6 +13,7 @@ class ReportWeeklyData {
   final String weekNote1; // 설명 1
   final String weekNote2; // 설명 2
   final int score; // 점수
+  final String? visible;
   final String color;
 
   ReportWeeklyData({
@@ -23,6 +24,7 @@ class ReportWeeklyData {
     required this.weekNote1,
     required this.weekNote2,
     required this.score,
+    required this.visible,
     required this.color,
   });
 
@@ -39,6 +41,7 @@ class ReportWeeklyData {
           ? (json['ju_note2'] as String).replaceAll('<br>', '\n')
           : "",
       score: json['jumsu'] ?? 0,
+      visible: json['yn'] ?? "N",
       color: json['color'] ?? "ffe7eef8",
     );
   }
