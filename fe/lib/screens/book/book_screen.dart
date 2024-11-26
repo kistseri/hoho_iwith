@@ -22,7 +22,6 @@ import 'package:flutter_application/utils/network_check.dart';
 import 'package:flutter_application/widgets/date_format.dart';
 import 'package:flutter_application/widgets/dialog.dart';
 import 'package:flutter_application/widgets/dropdown_screen.dart';
-import 'package:flutter_application/widgets/text_span.dart';
 import 'package:flutter_application/widgets/theme_controller.dart';
 import 'package:get/get.dart';
 
@@ -114,97 +113,60 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isVisibleAll =
-        reportViewDataController.reportViewData!.hVisible == "N" &&
-            reportViewDataController.reportViewData!.iVisible == "N";
-    final bool isVisibleH =
-        reportViewDataController.reportViewData!.hVisible == "Y";
-    final bool isVisibleI =
-        reportViewDataController.reportViewData!.iVisible == "Y";
-
     return Scaffold(
       body: Column(
         children: [
           // 이전-현재 날짜-다음
           calendarTab(),
           // 페이지 뷰
-          !isVisibleAll
-              ? Expanded(
-                  child: PageView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      onPageChanged: (int index) {
-                        setState(() {
-                          currentPageIndex = index;
-                        });
-                      },
-                      itemCount: _getPageCount(),
-                      // 총 페이지 수
-                      itemBuilder: (context, index) {
-                        final currentPage =
-                            DateTime(startYear, startMonth + index);
-                        return SingleChildScrollView(
-                          child: Obx(() => Container(
-                                color: themeController.isLightTheme.value
-                                    ? LightColors.yellow
-                                    : DarkColors.basic,
-                                child: Column(
-                                  children: [
-                                    // 한스쿨 리포트(과목 수강중인 경우만)
-                                    isVisibleH
-                                        ? isReportClassExistDataController
-                                                .isSExist
-                                            ? HanReport(
-                                                year: currentPage.year,
-                                                month: currentPage.month)
-                                            : const SizedBox()
-                                        : const SizedBox(),
-                                    // 북스쿨 리포트(과목 수강중인 경우만)
-                                    isVisibleI
-                                        ? isReportClassExistDataController
-                                                .isIExist
-                                            ? BookReport(
-                                                year: currentPage.year,
-                                                month: currentPage.month)
-                                            : const SizedBox()
-                                        : const SizedBox(),
-                                    // 독서클리닉 결과 1
-                                    BookResult1(
-                                        year: currentPage.year,
-                                        month: currentPage.month),
-                                    // 독서클리닉 결과 2
-                                    const BookResult2(),
-                                    // 독서클리닉 결과
-                                    BookResult3(
-                                        year: currentPage.year,
-                                        month: currentPage.month)
-                                  ],
-                                ),
-                              )),
-                        );
-                      }),
-                )
-              : Expanded(
-                  child: PageView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      onPageChanged: (int index) {
-                        setState(() {
-                          currentPageIndex = index;
-                        });
-                      },
-                      itemCount: _getPageCount(),
-                      // 총 페이지 수
-                      itemBuilder: (context, index) {
-                        final currentPage =
-                            DateTime(startYear, startMonth + index);
-                        return Center(
-                            child: RichText(
-                          text: colorText(
-                              "해당 월의 월말평가 준비중 입니다.", LightColors.blue),
-                        ));
-                      }),
-                )
+          Expanded(
+            child: PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                onPageChanged: (int index) {
+                  setState(() {
+                    currentPageIndex = index;
+                  });
+                },
+                itemCount: _getPageCount(),
+                // 총 페이지 수
+                itemBuilder: (context, index) {
+                  final currentPage = DateTime(startYear, startMonth + index);
+                  return SingleChildScrollView(
+                    child: Obx(() => Container(
+                          color: themeController.isLightTheme.value
+                              ? LightColors.yellow
+                              : DarkColors.basic,
+                          child: Column(
+                            children: [
+                              // 한스쿨 리포트(과목 수강중인 경우만)
+                              isReportClassExistDataController.isSExist
+                                  ? HanReport(
+                                      year: currentPage.year,
+                                      month: currentPage.month)
+                                  : const SizedBox(),
+                              // 북스쿨 리포트(과목 수강중인 경우만)
+                              isReportClassExistDataController.isIExist
+                                  ? BookReport(
+                                      year: currentPage.year,
+                                      month: currentPage.month)
+                                  : const SizedBox(),
+                              // 독서클리닉 결과 1
+                              BookResult1(
+                                  year: currentPage.year,
+                                  month: currentPage.month),
+                              // 독서클리닉 결과 2
+                              const BookResult2(),
+                              // 독서클리닉 결과
+                              BookResult3(
+                                  year: currentPage.year,
+                                  month: currentPage.month)
+                            ],
+                          ),
+                        )),
+                  );
+                }),
+          ),
         ],
       ),
     );

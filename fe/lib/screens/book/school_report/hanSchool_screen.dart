@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/models/book_data/report_view_data.dart';
 import 'package:flutter_application/models/book_data/report_weekly_data.dart';
 import 'package:flutter_application/screens/book/school_report/school_monthly_result.dart';
 import 'package:flutter_application/screens/book/school_report/school_weekly_result.dart';
@@ -28,12 +29,15 @@ class HanReport extends StatefulWidget {
 class _HanReportState extends State<HanReport> {
   final dropdownButtonController = Get.put(DropdownButtonController());
   final reportWeeklyDataController = Get.put(ReportWeeklyDataController());
+  final reportViewDataController = Get.put(ReportViewDataController());
   final themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
     final isValidBook =
         reportWeeklyDataController.sBookName != "" ? true : false;
+    final bool isMonthlyVisibleH =
+        reportViewDataController.reportViewData!.hVisible == "Y";
 
     return Obx(() => Container(
           color: themeController.isLightTheme.value
@@ -65,7 +69,8 @@ class _HanReportState extends State<HanReport> {
                             themeController.isLightTheme.value
                                 ? LightColors.blue
                                 : DarkColors.blue),
-                        normalText("를 학습했어요."),
+                        normalText(
+                            "${getCorrectParticle(reportWeeklyDataController.sBookName)} 학습했어요."),
                       ])
                     : normalText("학습 데이터가 없어요."),
               ),
@@ -86,8 +91,8 @@ class _HanReportState extends State<HanReport> {
                             reportWeeklyDataController.sWeeklyDataList.length
                         ? true
                         : false;
-                    final isVisible = reportWeeklyDataController
-                            .reportWeeklyDataList![week - 1].visible ==
+                    final bool isVisible = reportWeeklyDataController
+                            .sWeeklyDataList[week - 1].visible ==
                         'Y';
                     return SchoolWeeklyResult(
                       week: week,
@@ -114,6 +119,7 @@ class _HanReportState extends State<HanReport> {
                                 ),
                               ),
                               const SizedBox(height: 5),
+
                               // subTitleImage("han_report3.png", "TEST",
                               //     const Color(0xfff1a63a)),
                               // Row(
@@ -156,9 +162,29 @@ class _HanReportState extends State<HanReport> {
                 ),
               ),
               // 최종 평가
-              schoolMonthlyResult("han"),
+              isMonthlyVisibleH
+                  ? schoolMonthlyResult("han")
+                  : const SizedBox.shrink(),
             ],
           ),
         ));
+  }
+
+  String getCorrectParticle(String sentence) {
+    String lastWord = sentence.trim().split(' ').last;
+
+    if (lastWord.isEmpty) {
+      return '';
+    }
+
+    int lastChar = lastWord.codeUnitAt(lastWord.length - 1);
+
+    if (lastChar < 0xAC00 || lastChar > 0xD7A3) {
+      return '';
+    }
+
+    bool hasFinalConsonant = (lastChar - 0xAC00) % 28 != 0;
+
+    return hasFinalConsonant ? '을' : '를';
   }
 }

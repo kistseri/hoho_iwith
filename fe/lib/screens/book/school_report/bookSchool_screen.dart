@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/book_data/report_monthly_data.dart';
+import 'package:flutter_application/models/book_data/report_view_data.dart';
 import 'package:flutter_application/models/book_data/report_weekly_data.dart';
 import 'package:flutter_application/screens/book/school_report/school_monthly_result.dart';
 import 'package:flutter_application/screens/book/school_report/school_weekly_result.dart';
@@ -31,13 +32,15 @@ class BookReport extends StatefulWidget {
 class _BookReportState extends State<BookReport> {
   final dropdownButtonController = Get.put(DropdownButtonController());
   final reportWeeklyDataController = Get.put(ReportWeeklyDataController());
+  final reportViewDataController = Get.put(ReportViewDataController());
   final themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
     final isValidBook =
         reportWeeklyDataController.iBookName != "" ? true : false;
-
+    final bool isMonthlyVisibleI =
+        reportViewDataController.reportViewData!.iVisible == "Y";
     return Obx(() => Container(
           color: themeController.isLightTheme.value
               ? (reportWeeklyDataController.iWeeklyDataList.isNotEmpty
@@ -69,7 +72,8 @@ class _BookReportState extends State<BookReport> {
                                   themeController.isLightTheme.value
                                       ? LightColors.blue
                                       : DarkColors.blue),
-                              normalText("를 학습했어요."),
+                              normalText(
+                                  "${getIBookName(reportWeeklyDataController.iBookName)} 학습했어요."),
                             ])
                           : normalText("학습 데이터가 없어요."),
                     ),
@@ -92,8 +96,8 @@ class _BookReportState extends State<BookReport> {
                                 ? true
                                 : false;
 
-                            final isVisible = reportWeeklyDataController
-                                    .reportWeeklyDataList![week - 1].visible ==
+                            final bool isVisible = reportWeeklyDataController
+                                    .iWeeklyDataList[week - 1].visible ==
                                 "Y";
 
                             // 수업내용 글 스타일
@@ -124,26 +128,30 @@ class _BookReportState extends State<BookReport> {
                                       subTitleImage("book_report1.png", "수업내용",
                                           const Color(0xff34b8bc)),
                                       RichText(
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: formattedWeekNote2[1],
-                                              style: TextStyle(
-                                                  color: themeController
-                                                          .isLightTheme.value
-                                                      ? LightColors.blue
-                                                      : const Color(0xffbec7ff),
-                                                  fontFamily:
-                                                      "NotoSansKR-SemiBold",
-                                                  fontSize: 18)),
-                                          TextSpan(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: formattedWeekNote2[1],
+                                                style: TextStyle(
+                                                    color: themeController
+                                                            .isLightTheme.value
+                                                        ? LightColors.blue
+                                                        : const Color(
+                                                            0xffbec7ff),
+                                                    fontFamily:
+                                                        "NotoSansKR-SemiBold",
+                                                    fontSize: 18)),
+                                            TextSpan(
                                               text: formattedWeekNote2[2],
                                               style: TextStyle(
                                                   color: Theme.of(Get.context!)
                                                       .colorScheme
                                                       .onSurface,
-                                                  fontSize: 18)),
-                                        ]),
-                                      )
+                                                  fontSize: 18),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ]
                                   : [],
                             );
@@ -153,11 +161,31 @@ class _BookReportState extends State<BookReport> {
                     // RichText(text: normalText("이달의 글쓰기")),
                     // const BookReportImage(),
                     // 최종 평가
-                    schoolMonthlyResult("book"),
+                    isMonthlyVisibleI
+                        ? schoolMonthlyResult("book")
+                        : const SizedBox.shrink(),
                   ],
                 )
               : SizedBox(height: 20),
         ));
+  }
+
+  String getIBookName(String sentence) {
+    String lastWord = sentence.trim().split(' ').last;
+
+    if (lastWord.isEmpty) {
+      return '';
+    }
+
+    int lastChar = lastWord.codeUnitAt(lastWord.length - 1);
+
+    if (lastChar < 0xAC00 || lastChar > 0xD7A3) {
+      return '';
+    }
+
+    bool hasFinalConsonant = (lastChar - 0xAC00) % 28 != 0;
+
+    return hasFinalConsonant ? '을' : '를';
   }
 }
 
